@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed');
+@import url('https://fonts.googleapis.com/css2?family=Barlow');
+@import url('https://fonts.googleapis.com/css2?family=Skippy+Sharp');
+@font-face {
+    font-family: 'Peace Sans';
+    src: url('http://db.onlinewebfonts.com/t/2a32094b74bdd4607c616294a8a90740.eot'); /* IE9*/
+    src: url('http://db.onlinewebfonts.com/t/2a32094b74bdd4607c616294a8a90740.eot?#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */ url('http://db.onlinewebfonts.com/t/2a32094b74bdd4607c616294a8a90740.woff2') format('woff2'),
+        /* chrome firefox */ url('http://db.onlinewebfonts.com/t/2a32094b74bdd4607c616294a8a90740.woff') format('woff'),
+        /* chrome firefox */ url('http://db.onlinewebfonts.com/t/2a32094b74bdd4607c616294a8a90740.ttf')
+            format('truetype'),
+        /* chrome firefox opera Safari, Android, iOS 4.2+*/
+            url('http://db.onlinewebfonts.com/t/2a32094b74bdd4607c616294a8a90740.svg#Peace Sans') format('svg'); /* iOS 4.1- */
+}

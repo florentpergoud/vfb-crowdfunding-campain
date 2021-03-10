@@ -1,6 +1,6 @@
 import { Composition } from 'remotion';
+import '../assets/font.css';
 import { CrowdfundingEvolution } from './CrowdfundingEvolution/CrowdfundingEvolution';
-import './font.css';
 
 const INSTAGRAM_STORY_CONF = {
     fps: 30,
