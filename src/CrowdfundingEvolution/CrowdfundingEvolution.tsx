@@ -2,6 +2,7 @@ import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../theme';
+import { Fillings } from './components/Fillings';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Scale } from './components/Scale';
@@ -22,6 +23,7 @@ export const CrowdfundingEvolution: React.FC = () => {
             <Background />
             <ContentContainer>
                 <Header />
+                <Fillings />
                 <StyledScale amounts={AMOUNTS} />
                 <Footer currentAmount={CURRENT_AMOUNT} />
             </ContentContainer>
