@@ -1,19 +1,34 @@
-import { Img } from 'remotion';
+import { Img, interpolate, useCurrentFrame } from 'remotion';
 import styled from 'styled-components';
 import logoMiimosa from '../../../assets/logoMiimosa.png';
 
 export const Header: React.FC = () => {
+    const frame = useCurrentFrame();
+
+    const getAppearanceRotation = (delay: number, durationInFrame: number) => {
+        return interpolate(frame - delay, [0, durationInFrame], [90, 0], {
+            extrapolateRight: 'clamp',
+            extrapolateLeft: 'clamp',
+        });
+    };
+
+    const headerFirstLineAppearance = getAppearanceRotation(0, 30);
+    const headerSecondLineAppearance = getAppearanceRotation(30, 30);
+    const headerThirdLineAppearance = getAppearanceRotation(60, 30);
+
     return (
         <Container>
-            <HeaderText>Participez</HeaderText>
-            <SecondLineContainer>
+            <LineContainer $rotateXdegrees={headerFirstLineAppearance}>
+                <HeaderText>Participez</HeaderText>
+            </LineContainer>
+            <SecondLineContainer $rotateXdegrees={headerSecondLineAppearance}>
                 <SecondLineTextContainer>
                     <HeaderText>à notre campagne de</HeaderText>
                     <HeaderTextVariant>crowdfunding</HeaderTextVariant>
                 </SecondLineTextContainer>
                 <UnderlineDash />
             </SecondLineContainer>
-            <ThirdLineContainer>
+            <ThirdLineContainer $rotateXdegrees={headerThirdLineAppearance}>
                 <HeaderTextSmall>sur</HeaderTextSmall>
                 <StyledImg src={logoMiimosa} />
                 <LogoDomainExtension>.com</LogoDomainExtension>
@@ -29,6 +44,9 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
 `;
+const LineContainer = styled.div<{ $rotateXdegrees: number }>`
+    transform: ${({ $rotateXdegrees }) => `rotateX(${$rotateXdegrees}deg)`};
+`;
 
 const HeaderText = styled.span`
     font-size: 72px;
@@ -38,7 +56,7 @@ const HeaderText = styled.span`
     letter-spacing: 0.04em;
 `;
 
-const SecondLineContainer = styled.div`
+const SecondLineContainer = styled(LineContainer)`
     padding-top: 7px;
 `;
 
@@ -58,7 +76,7 @@ const HeaderTextVariant = styled.span`
     padding-top: 4px;
 `;
 
-const ThirdLineContainer = styled.div`
+const ThirdLineContainer = styled(LineContainer)`
     display: flex;
     flex-direction: row;
     margin-top: 27px;
