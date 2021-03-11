@@ -1,7 +1,4 @@
-import { AbsoluteFill } from 'remotion';
 import styled from 'styled-components';
-
-const SCALE_HEIGHT = 844;
 
 interface Props {
     amounts: {
@@ -9,11 +6,12 @@ interface Props {
         medium: number;
         high: number;
     };
+    className?: string;
 }
 
-export const Scale: React.FC<Props> = ({ amounts: { low, medium, high } }) => {
+export const Scale: React.FC<Props> = ({ amounts: { low, medium, high }, className }) => {
     return (
-        <Container>
+        <Container className={className}>
             <HighAmountText>{`${high}€`}</HighAmountText>
             <ScaleBodyContainer>
                 <HighAmountDot />
@@ -42,9 +40,10 @@ export const Scale: React.FC<Props> = ({ amounts: { low, medium, high } }) => {
     );
 };
 
-const Container = styled(AbsoluteFill)`
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding-top: 466px;
 `;
 
 const AmountText = styled.div`

@@ -1,6 +1,6 @@
-import { AbsoluteFill, Img } from 'remotion';
+import { Img } from 'remotion';
 import styled from 'styled-components';
-import logoMiimosa from '../../assets/logoMiimosa.png';
+import logoMiimosa from '../../../assets/logoMiimosa.png';
 
 export const Header: React.FC = () => {
     return (
@@ -22,9 +22,12 @@ export const Header: React.FC = () => {
     );
 };
 
-const Container = styled(AbsoluteFill)`
+const Container = styled.div`
     align-items: center;
     margin-top: 124px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
 const HeaderText = styled.span`
