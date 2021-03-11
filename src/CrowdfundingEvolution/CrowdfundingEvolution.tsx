@@ -7,7 +7,7 @@ import { Header } from './components/Header';
 import { Scale } from './components/Scale';
 
 const AMOUNTS = {
-    low: 2000,
+    small: 2000,
     medium: 5000,
     high: 8000,
 };
