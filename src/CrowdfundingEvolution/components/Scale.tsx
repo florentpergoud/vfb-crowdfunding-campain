@@ -1,23 +1,34 @@
+import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
+import { Amounts } from '../interface';
 
 interface Props {
-    amounts: {
-        small: number;
-        medium: number;
-        high: number;
-    };
+    amounts: Amounts;
+    currentAmount: number;
+    delay: number;
     className?: string;
 }
 
 const SCALE_HEIGHT = 803;
+const SCALE_ANIMATION_DURATION = 4;
 
-export const Scale: React.FC<Props> = ({ amounts: { small, medium, high }, className }) => {
-    const mediumAmountYAxisPosition = SCALE_HEIGHT - (medium / high) * SCALE_HEIGHT;
-    const smallAmountYAxisPosition = SCALE_HEIGHT - (small / high) * SCALE_HEIGHT;
+export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high }, currentAmount, className, delay }) => {
+    const frame = useCurrentFrame();
+    const { fps } = useVideoConfig();
+
+    const mediumAmountYAxisPosition = SCALE_HEIGHT - ((medium - base) / (high - base)) * SCALE_HEIGHT;
+    const smallAmountYAxisPosition = SCALE_HEIGHT - ((small - base) / (high - base)) * SCALE_HEIGHT;
+
+    const amountAnimationDuration = SCALE_ANIMATION_DURATION * fps;
+    const amountAnimation = interpolate(frame - delay, [0, amountAnimationDuration], [0, currentAmount], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+    });
+    console.log('amountAnimation', JSON.stringify(amountAnimation, null, 2));
 
     return (
         <Container className={className}>
-            <HighAmountText>{`${high}€`}</HighAmountText>
+            <HighAmountText>{`${Math.round(amountAnimation)}€`}</HighAmountText>
             <ScaleBodyContainer>
                 <EnormousDot />
                 <Dash />

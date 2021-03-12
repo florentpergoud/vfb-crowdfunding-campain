@@ -6,16 +6,18 @@ import { Fillings } from './components/Fillings';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Scale } from './components/Scale';
+import { Amounts } from './interface';
 
-const AMOUNTS = {
-    small: 2000,
-    medium: 5000,
+const AMOUNTS: Amounts = {
+    base: 2000,
+    small: 4000,
+    medium: 6000,
     high: 8000,
 };
 
-const CONTENT_HORIZONTAL_PADDING = 75;
+const CURRENT_AMOUNT = 1234;
 
-const CURRENT_AMOUNT = 2345;
+const CONTENT_HORIZONTAL_PADDING = 75;
 
 export const CrowdfundingEvolution: React.FC = () => {
     return (
@@ -24,8 +26,8 @@ export const CrowdfundingEvolution: React.FC = () => {
             <ContentContainer>
                 <Header />
                 <Fillings />
-                <StyledScale amounts={AMOUNTS} />
-                <Footer currentAmount={CURRENT_AMOUNT} delay={30} />
+                <StyledScale amounts={AMOUNTS} currentAmount={CURRENT_AMOUNT} delay={60} />
+                <Footer delay={30} />
             </ContentContainer>
         </ThemeProvider>
     );
