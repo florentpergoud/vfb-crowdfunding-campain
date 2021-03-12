@@ -1,18 +1,10 @@
-import { Img, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { Img } from 'remotion';
 import styled from 'styled-components';
 import logoMiimosa from '../../../assets/logoMiimosa.png';
+import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
 export const Header: React.FC = () => {
-    const frame = useCurrentFrame();
-    const { fps } = useVideoConfig();
-
-    const bounceAnimation = spring({
-        frame,
-        fps,
-        config: { damping: 10.5, stiffness: 160, mass: 0.6 },
-    });
-
-    const scaleValue = interpolate(bounceAnimation, [0, 1], [0, 1]);
+    const { scaleValue } = useAppearWithScaleAndBounce();
 
     return (
         <Container $scale={scaleValue}>
