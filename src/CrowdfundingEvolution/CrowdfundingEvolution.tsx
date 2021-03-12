@@ -15,7 +15,7 @@ const AMOUNTS: Amounts = {
     high: 8000,
 };
 
-const CURRENT_AMOUNT = 1234;
+const CURRENT_AMOUNT = 4234;
 
 const CONTENT_HORIZONTAL_PADDING = 75;
 

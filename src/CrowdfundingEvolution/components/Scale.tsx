@@ -1,6 +1,9 @@
-import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
+import React from 'react';
+import { Img, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
+import littleBean from '../../../assets/littleBean.png';
 import { Amounts } from '../interface';
+import { ScaleBackground } from './ScaleBackground';
 
 interface Props {
     amounts: Amounts;
@@ -10,47 +13,43 @@ interface Props {
 }
 
 const SCALE_HEIGHT = 803;
-const SCALE_ANIMATION_DURATION = 4;
+const SCALE_ANIMATION_DURATION = 2.5;
+const BEAN_Y_OFFSET = 20;
+
+const getYPositionForValue = ({
+    highValue,
+    baseValue,
+    value,
+}: {
+    highValue: number;
+    baseValue: number;
+    value: number;
+}) => {
+    return SCALE_HEIGHT * ((highValue - value) / (highValue - baseValue));
+};
 
 export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high }, currentAmount, className, delay }) => {
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
 
-    const mediumAmountYAxisPosition = SCALE_HEIGHT - ((medium - base) / (high - base)) * SCALE_HEIGHT;
-    const smallAmountYAxisPosition = SCALE_HEIGHT - ((small - base) / (high - base)) * SCALE_HEIGHT;
+    const mediumAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: medium });
+    const smallAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: small });
 
     const amountAnimationDuration = SCALE_ANIMATION_DURATION * fps;
-    const amountAnimation = interpolate(frame - delay, [0, amountAnimationDuration], [0, currentAmount], {
+
+    const amountValueAnimation = interpolate(frame - delay, [0, amountAnimationDuration], [base, currentAmount], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
     });
-    console.log('amountAnimation', JSON.stringify(amountAnimation, null, 2));
+
+    const translateBeanYValue =
+        getYPositionForValue({ baseValue: base, highValue: high, value: amountValueAnimation }) + BEAN_Y_OFFSET;
 
     return (
         <Container className={className}>
-            <HighAmountText>{`${Math.round(amountAnimation)}€`}</HighAmountText>
+            <HighAmountText>{`${Math.round(amountValueAnimation)}€`}</HighAmountText>
             <ScaleBodyContainer>
-                <EnormousDot />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <Dash />
-                <BottomDot />
+                <ScaleBackground />
                 <MediumAmountContainer $top={mediumAmountYAxisPosition}>
                     <MediumDot />
                     <MediumAmountText>{medium}€</MediumAmountText>
@@ -59,6 +58,7 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
                     <SmallDot />
                     <SmallAmountText>{small}€</SmallAmountText>
                 </SmallAmountContainer>
+                <Bean src={littleBean} $translateYValue={translateBeanYValue} />
             </ScaleBodyContainer>
         </Container>
     );
@@ -102,43 +102,20 @@ const ScaleBodyContainer = styled.div`
     width: 100%;
 `;
 
-const BaseDot = styled.div`
-    background: ${({ theme }) => theme.colors.secondary2};
-`;
-
-const Dash = styled.div`
-    width: 5px;
-    height: 20px;
-    background: ${({ theme }) => theme.colors.secondary2};
-    margin-top: 20px;
-`;
-
-const EnormousDot = styled(BaseDot)`
-    margin-top: 54px;
-    height: 54px;
-    width: 54px;
-    border-radius: 27px;
-`;
-
-const MediumDot = styled(BaseDot)`
+const MediumDot = styled.div`
     height: 46px;
     width: 46px;
     border-radius: 23px;
     margin-left: 116px;
+    background: ${({ theme }) => theme.colors.secondary2};
 `;
 
-const SmallDot = styled(BaseDot)`
+const SmallDot = styled.div`
     height: 37px;
     width: 37px;
     border-radius: 19px;
     margin-right: 93px;
-`;
-
-const BottomDot = styled(BaseDot)`
-    height: 28px;
-    width: 28px;
-    border-radius: 14px;
-    margin-top: 5px;
+    background: ${({ theme }) => theme.colors.secondary2};
 `;
 
 const MediumAmountContainer = styled.div<{ $top: number }>`
@@ -161,4 +138,9 @@ const SmallAmountContainer = styled.div<{ $top: number }>`
     width: 100%;
     padding-left: 448px;
     top: ${({ $top }) => $top + 48}px;
+`;
+
+const Bean = styled(Img)<{ $translateYValue: number }>`
+    position: absolute;
+    top: ${({ $translateYValue }) => $translateYValue}px};
 `;
