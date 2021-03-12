@@ -15,7 +15,7 @@ const AMOUNTS: Amounts = {
     high: 8000,
 };
 
-const CURRENT_AMOUNT = 4234;
+const CURRENT_AMOUNT = 8000;
 
 const CONTENT_HORIZONTAL_PADDING = 75;
 
@@ -34,7 +34,7 @@ export const CrowdfundingEvolution: React.FC = () => {
 };
 
 const Background = styled(AbsoluteFill)`
-    background: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.hotwhite};
 `;
 
 const StyledScale = styled(Scale)`

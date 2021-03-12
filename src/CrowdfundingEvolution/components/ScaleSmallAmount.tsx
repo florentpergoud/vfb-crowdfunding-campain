@@ -1,13 +1,17 @@
 import styled from 'styled-components';
+import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
 interface Props {
     top: number;
     amount: number;
+    delay?: number;
 }
 
-export const ScaleSmallAmount: React.FC<Props> = ({ top, amount }) => {
+export const ScaleSmallAmount: React.FC<Props> = ({ top, amount, delay }) => {
+    const { scaleValue } = useAppearWithScaleAndBounce(delay);
+
     return (
-        <SmallAmountContainer $top={top}>
+        <SmallAmountContainer $top={top} $scale={scaleValue}>
             <SmallDot />
             <SmallAmountText>{amount}€</SmallAmountText>
         </SmallAmountContainer>
@@ -36,7 +40,7 @@ const SmallDot = styled.div`
     background: ${({ theme }) => theme.colors.secondary2};
 `;
 
-const SmallAmountContainer = styled.div<{ $top: number }>`
+const SmallAmountContainer = styled.div<{ $top: number; $scale: number }>`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -45,4 +49,5 @@ const SmallAmountContainer = styled.div<{ $top: number }>`
     width: 100%;
     padding-left: 448px;
     top: ${({ $top }) => $top + 48}px;
+    transform: ${({ $scale }) => `scale(${$scale})`};
 `;

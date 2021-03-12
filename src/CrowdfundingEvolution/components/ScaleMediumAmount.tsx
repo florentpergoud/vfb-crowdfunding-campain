@@ -1,13 +1,17 @@
 import styled from 'styled-components';
+import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
 interface Props {
     top: number;
     amount: number;
+    delay?: number;
 }
 
-export const ScaleMediumAmount: React.FC<Props> = ({ top, amount }) => {
+export const ScaleMediumAmount: React.FC<Props> = ({ top, amount, delay }) => {
+    const { scaleValue } = useAppearWithScaleAndBounce(delay);
+
     return (
-        <MediumAmountContainer $top={top}>
+        <MediumAmountContainer $top={top} $scale={scaleValue}>
             <MediumDot />
             <MediumAmountText>{amount}€</MediumAmountText>
         </MediumAmountContainer>
@@ -36,7 +40,7 @@ const MediumDot = styled.div`
     background: ${({ theme }) => theme.colors.secondary2};
 `;
 
-const MediumAmountContainer = styled.div<{ $top: number }>`
+const MediumAmountContainer = styled.div<{ $top: number; $scale: number }>`
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -45,4 +49,5 @@ const MediumAmountContainer = styled.div<{ $top: number }>`
     height: 110px;
     padding-right: 442px;
     top: ${({ $top }) => $top + 55}px;
+    transform: ${({ $scale }) => `scale(${$scale})`};
 `;

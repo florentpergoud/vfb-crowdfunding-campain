@@ -5,6 +5,7 @@ export const theme = {
         secondary2: '#004E67',
         miimosaBrand: '#3DA385',
         white: '#ffffff',
+        hotwhite: '#FFFEF9',
     },
     fonts: {
         barlowCondensed: 'Barlow Condensed',

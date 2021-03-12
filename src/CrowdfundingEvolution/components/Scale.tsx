@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Img, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
 import littleBean from '../../../assets/littleBean.png';
@@ -16,7 +16,7 @@ interface Props {
 
 const SCALE_HEIGHT = 803;
 const SCALE_ANIMATION_DURATION = 2.5;
-const BEAN_Y_OFFSET = 20;
+const BEAN_Y_OFFSET = 30;
 
 const getYPositionForValue = ({
     highValue,
@@ -28,6 +28,10 @@ const getYPositionForValue = ({
     value: number;
 }) => {
     return SCALE_HEIGHT * ((highValue - value) / (highValue - baseValue));
+};
+
+const shouldDisplayScaleAmount = (amountValueAnimation: number, currentAmount: number, scaleAmount: number) => {
+    return amountValueAnimation >= scaleAmount || amountValueAnimation === currentAmount;
 };
 
 export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high }, currentAmount, className, delay }) => {
@@ -47,13 +51,24 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
     const translateBeanYValue =
         getYPositionForValue({ baseValue: base, highValue: high, value: amountValueAnimation }) + BEAN_Y_OFFSET;
 
+    const shouldDisplayScaleMediumAmount = useMemo(
+        () => shouldDisplayScaleAmount(amountValueAnimation, currentAmount, medium),
+        [amountValueAnimation, currentAmount, medium],
+    );
+    const shouldDisplayScaleSmallAmount = useMemo(
+        () => shouldDisplayScaleAmount(amountValueAnimation, currentAmount, small),
+        [amountValueAnimation, currentAmount, small],
+    );
+
     return (
         <Container className={className}>
             <HighAmountText>{`${Math.round(amountValueAnimation)}€`}</HighAmountText>
             <ScaleBodyContainer>
                 <ScaleBackground />
-                <ScaleMediumAmount top={mediumAmountYAxisPosition} amount={medium} />
-                <ScaleSmallAmount top={smallAmountYAxisPosition} amount={small} />
+                {shouldDisplayScaleMediumAmount && (
+                    <ScaleMediumAmount top={mediumAmountYAxisPosition} amount={medium} />
+                )}
+                {shouldDisplayScaleSmallAmount && <ScaleSmallAmount top={smallAmountYAxisPosition} amount={small} />}
                 <Bean src={littleBean} $translateYValue={translateBeanYValue} />
             </ScaleBodyContainer>
         </Container>
