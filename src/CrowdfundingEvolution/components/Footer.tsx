@@ -2,15 +2,16 @@ import { Img, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remot
 import styled from 'styled-components';
 import neutralMandarine from '../../../assets/characters/Neutral-Mandarine.png';
 import neutralMimo from '../../../assets/characters/Neutral-Mimo.png';
+import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
 interface Props {
-    currentAmount: number;
     delay: number;
 }
 
-export const Footer: React.FC<Props> = ({ currentAmount, delay }) => {
+export const Footer: React.FC<Props> = ({ delay }) => {
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
+    const { scaleValue } = useAppearWithScaleAndBounce(delay);
 
     const entranceAnimationStartFrame = frame - delay;
 
@@ -25,10 +26,7 @@ export const Footer: React.FC<Props> = ({ currentAmount, delay }) => {
     return (
         <Container>
             <StyledImg src={neutralMimo} $translateXValue={inTranslateX} />
-            <CentalTextContainer>
-                {`déjà ${currentAmount}€`}
-                <LighterText>Merci !</LighterText>
-            </CentalTextContainer>
+            <CentalTextContainer $scaleValue={scaleValue}>Merci !</CentalTextContainer>
             <StyledImg src={neutralMandarine} $translateXValue={-inTranslateX} />
         </Container>
     );
@@ -45,21 +43,17 @@ const StyledImg = styled(Img)<{ $translateXValue: number }>`
     transform: ${({ $translateXValue }) => `translateX(${$translateXValue}px)`};
 `;
 
-const CentalTextContainer = styled.div`
-    margin-top: 33px;
+const CentalTextContainer = styled.div<{ $scaleValue: number }>`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
     font-family: 'Barlow Condensed';
     font-style: normal;
     font-weight: 600;
-    font-size: 70px;
+    font-size: 84px;
     line-height: 84px;
-    color: ${({ theme }) => theme.colors.secondary2};
-`;
-
-const LighterText = styled.span`
-    margin-top: 8px;
     color: ${({ theme }) => theme.colors.secondary};
+    transform: ${({ $scaleValue }) => `scale(${$scaleValue})`};
 `;
