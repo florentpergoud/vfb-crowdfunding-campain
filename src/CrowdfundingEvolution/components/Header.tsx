@@ -1,34 +1,30 @@
-import { Img, interpolate, useCurrentFrame } from 'remotion';
+import { Img, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
 import logoMiimosa from '../../../assets/logoMiimosa.png';
 
 export const Header: React.FC = () => {
     const frame = useCurrentFrame();
+    const { fps } = useVideoConfig();
 
-    const getAppearanceRotation = (delay: number, durationInFrame: number) => {
-        return interpolate(frame - delay, [0, durationInFrame], [90, 0], {
-            extrapolateRight: 'clamp',
-            extrapolateLeft: 'clamp',
-        });
-    };
+    const bounceAnimation = spring({
+        frame,
+        fps,
+        config: { damping: 10.5, stiffness: 160, mass: 0.6 },
+    });
 
-    const headerFirstLineAppearance = getAppearanceRotation(0, 30);
-    const headerSecondLineAppearance = getAppearanceRotation(30, 30);
-    const headerThirdLineAppearance = getAppearanceRotation(60, 30);
+    const scaleValue = interpolate(bounceAnimation, [0, 1], [0, 1]);
 
     return (
-        <Container>
-            <LineContainer $rotateXdegrees={headerFirstLineAppearance}>
-                <HeaderText>Participez</HeaderText>
-            </LineContainer>
-            <SecondLineContainer $rotateXdegrees={headerSecondLineAppearance}>
+        <Container $scale={scaleValue}>
+            <HeaderText>Participez à notre</HeaderText>
+            <SecondLineContainer>
                 <SecondLineTextContainer>
-                    <HeaderText>à notre campagne de</HeaderText>
+                    <HeaderText>campagne de</HeaderText>
                     <HeaderTextVariant>crowdfunding</HeaderTextVariant>
                 </SecondLineTextContainer>
                 <UnderlineDash />
             </SecondLineContainer>
-            <ThirdLineContainer $rotateXdegrees={headerThirdLineAppearance}>
+            <ThirdLineContainer>
                 <HeaderTextSmall>sur</HeaderTextSmall>
                 <StyledImg src={logoMiimosa} />
                 <LogoDomainExtension>.com</LogoDomainExtension>
@@ -37,15 +33,13 @@ export const Header: React.FC = () => {
     );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ $scale: number }>`
     align-items: center;
     margin-top: 124px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-`;
-const LineContainer = styled.div<{ $rotateXdegrees: number }>`
-    transform: ${({ $rotateXdegrees }) => `rotateX(${$rotateXdegrees}deg)`};
+    transform: ${({ $scale }) => `scale(${$scale})`};
 `;
 
 const HeaderText = styled.span`
@@ -56,7 +50,7 @@ const HeaderText = styled.span`
     letter-spacing: 0.04em;
 `;
 
-const SecondLineContainer = styled(LineContainer)`
+const SecondLineContainer = styled.div`
     padding-top: 7px;
 `;
 
@@ -76,7 +70,7 @@ const HeaderTextVariant = styled.span`
     padding-top: 4px;
 `;
 
-const ThirdLineContainer = styled(LineContainer)`
+const ThirdLineContainer = styled.div`
     display: flex;
     flex-direction: row;
     margin-top: 27px;
@@ -99,7 +93,7 @@ const UnderlineDash = styled.div`
     height: 5px;
     border-radius: 2.89px;
     transform: rotate(-3deg);
-    margin-left: 775px;
+    margin-left: 570px;
 `;
 
 const StyledImg = styled(Img)`
