@@ -1,21 +1,35 @@
-import { Img } from 'remotion';
+import { Img, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
 import neutralMandarine from '../../../assets/characters/Neutral-Mandarine.png';
 import neutralMimo from '../../../assets/characters/Neutral-Mimo.png';
 
 interface Props {
     currentAmount: number;
+    delay: number;
 }
 
-export const Footer: React.FC<Props> = ({ currentAmount }) => {
+export const Footer: React.FC<Props> = ({ currentAmount, delay }) => {
+    const frame = useCurrentFrame();
+    const { fps } = useVideoConfig();
+
+    const entranceAnimationStartFrame = frame - delay;
+
+    const entranceAnimation = spring({
+        frame: entranceAnimationStartFrame,
+        fps,
+        config: { damping: 200 },
+    });
+
+    const inTranslateX = interpolate(entranceAnimation, [0, 1], [-350, 0]);
+
     return (
         <Container>
-            <StyledImg src={neutralMimo} />
+            <StyledImg src={neutralMimo} $translateXValue={inTranslateX} />
             <CentalTextContainer>
                 {`déjà ${currentAmount}€`}
                 <LighterText>Merci !</LighterText>
             </CentalTextContainer>
-            <StyledImg src={neutralMandarine} />
+            <StyledImg src={neutralMandarine} $translateXValue={-inTranslateX} />
         </Container>
     );
 };
@@ -26,8 +40,9 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const StyledImg = styled(Img)`
+const StyledImg = styled(Img)<{ $translateXValue: number }>`
     margin-left: 12px;
+    transform: ${({ $translateXValue }) => `translateX(${$translateXValue}px)`};
 `;
 
 const CentalTextContainer = styled.div`

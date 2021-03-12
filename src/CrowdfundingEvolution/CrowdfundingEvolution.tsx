@@ -25,7 +25,7 @@ export const CrowdfundingEvolution: React.FC = () => {
                 <Header />
                 <Fillings />
                 <StyledScale amounts={AMOUNTS} />
-                <Footer currentAmount={CURRENT_AMOUNT} />
+                <Footer currentAmount={CURRENT_AMOUNT} delay={30} />
             </ContentContainer>
         </ThemeProvider>
     );
