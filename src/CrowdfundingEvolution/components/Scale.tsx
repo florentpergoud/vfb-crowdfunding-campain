@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import littleBean from '../../../assets/littleBean.png';
 import { Amounts } from '../interface';
 import { ScaleBackground } from './ScaleBackground';
+import { ScaleMediumAmount } from './ScaleMediumAmount';
+import { ScaleSmallAmount } from './ScaleSmallAmount';
 
 interface Props {
     amounts: Amounts;
@@ -50,14 +52,8 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
             <HighAmountText>{`${Math.round(amountValueAnimation)}€`}</HighAmountText>
             <ScaleBodyContainer>
                 <ScaleBackground />
-                <MediumAmountContainer $top={mediumAmountYAxisPosition}>
-                    <MediumDot />
-                    <MediumAmountText>{medium}€</MediumAmountText>
-                </MediumAmountContainer>
-                <SmallAmountContainer $top={smallAmountYAxisPosition}>
-                    <SmallDot />
-                    <SmallAmountText>{small}€</SmallAmountText>
-                </SmallAmountContainer>
+                <ScaleMediumAmount top={mediumAmountYAxisPosition} amount={medium} />
+                <ScaleSmallAmount top={smallAmountYAxisPosition} amount={small} />
                 <Bean src={littleBean} $translateYValue={translateBeanYValue} />
             </ScaleBodyContainer>
         </Container>
@@ -84,60 +80,12 @@ const HighAmountText = styled(AmountText)`
     line-height: 142px;
 `;
 
-const MediumAmountText = styled(AmountText)`
-    font-size: 80px;
-    line-height: 111px;
-`;
-
-const SmallAmountText = styled(AmountText)`
-    font-size: 70px;
-    line-height: 97px;
-`;
-
 const ScaleBodyContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     width: 100%;
-`;
-
-const MediumDot = styled.div`
-    height: 46px;
-    width: 46px;
-    border-radius: 23px;
-    margin-left: 116px;
-    background: ${({ theme }) => theme.colors.secondary2};
-`;
-
-const SmallDot = styled.div`
-    height: 37px;
-    width: 37px;
-    border-radius: 19px;
-    margin-right: 93px;
-    background: ${({ theme }) => theme.colors.secondary2};
-`;
-
-const MediumAmountContainer = styled.div<{ $top: number }>`
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    height: 110px;
-    padding-right: 442px;
-    top: ${({ $top }) => $top + 55}px;
-`;
-
-const SmallAmountContainer = styled.div<{ $top: number }>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: absolute;
-    height: 96px;
-    width: 100%;
-    padding-left: 448px;
-    top: ${({ $top }) => $top + 48}px;
 `;
 
 const Bean = styled(Img)<{ $translateYValue: number }>`
