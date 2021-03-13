@@ -42,7 +42,7 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
 
     const { scaleValue } = useAppearWithScaleAndBounce(delay);
 
-    const apparitionDuration = 1 * fps;
+    const amountValueAnimationDuration = 0.5 * fps;
 
     const mediumAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: medium });
     const smallAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: small });
@@ -50,7 +50,7 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
     const amountAnimationDuration = SCALE_ANIMATION_DURATION * fps;
 
     const amountValueAnimation = interpolate(
-        frame - delay - apparitionDuration,
+        frame - delay - amountValueAnimationDuration,
         [0, amountAnimationDuration],
         [base, currentAmount],
         {

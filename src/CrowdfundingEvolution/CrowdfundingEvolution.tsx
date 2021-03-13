@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill } from 'remotion';
+import { AbsoluteFill, useVideoConfig } from 'remotion';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../theme';
 import { Fillings } from './components/Fillings';
@@ -15,19 +15,26 @@ const AMOUNTS: Amounts = {
     high: 8000,
 };
 
-const CURRENT_AMOUNT = 8000;
+const CURRENT_AMOUNT = 7000;
 
 const CONTENT_HORIZONTAL_PADDING = 75;
 
+const FILLING_DELAY_IN_SECONDS = 5;
+
 export const CrowdfundingEvolution: React.FC = () => {
+    const { fps } = useVideoConfig();
+
+    const scaleDelay = 0.5 * fps;
+    const footerDelay = 0.5 * fps;
+
     return (
         <ThemeProvider theme={theme}>
             <Background />
             <ContentContainer>
                 <Header />
-                <Fillings />
-                <StyledScale amounts={AMOUNTS} currentAmount={CURRENT_AMOUNT} delay={60} />
-                <StyledFooter delay={30} />
+                <Fillings delay={FILLING_DELAY_IN_SECONDS * fps} />
+                <StyledScale amounts={AMOUNTS} currentAmount={CURRENT_AMOUNT} delay={scaleDelay} />
+                <StyledFooter delay={footerDelay} />
             </ContentContainer>
         </ThemeProvider>
     );

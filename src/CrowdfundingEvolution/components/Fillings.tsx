@@ -1,49 +1,63 @@
-import { AbsoluteFill, Img } from 'remotion';
+import { AbsoluteFill, Img, interpolate, useCurrentFrame } from 'remotion';
 import styled from 'styled-components';
 import blueCircleFilling from '../../../assets/BlueCircleFilling.png';
 import crossFillings from '../../../assets/CrossFilling.png';
 import zigzag from '../../../assets/Zigzag.png';
+import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
-export const Fillings: React.FC = () => {
+interface Props {
+    delay: number;
+}
+
+export const Fillings: React.FC<Props> = ({ delay }) => {
+    const frame = useCurrentFrame();
+    const { scaleValue } = useAppearWithScaleAndBounce(delay);
+
+    const rotationValue = interpolate(frame - delay, [0, 30], [0, 180]);
+
     return (
-        <Container>
-            <CrossFilling src={crossFillings} />
-            <ZigzagFilling src={zigzag} />
+        <Container $scale={scaleValue}>
+            <CrossFilling src={crossFillings} $rotationValue={rotationValue} />
+            <ZigzagFilling src={zigzag} $rotationValue={rotationValue} />
             <CircleFilling src={blueCircleFilling} />
-            <SecondZigzagFilling src={zigzag} />
+            <SecondZigzagFilling src={zigzag} $rotationValue={rotationValue} />
             <Dot />
         </Container>
     );
 };
 
-const Container = styled(AbsoluteFill)``;
+const Container = styled(AbsoluteFill)<{ $scale: number }>`
+    transform: ${({ $scale }) => `scale(${$scale})`};
+`;
 
-const CrossFilling = styled(Img)`
+const CrossFilling = styled(Img)<{ $rotationValue: number }>`
     position: absolute;
     width: 43.69px;
     height: 43.69px;
     left: 130px;
     top: 422.92px;
+    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
-const ZigzagFilling = styled(Img)`
+const ZigzagFilling = styled(Img)<{ $rotationValue: number }>`
     position: absolute;
     left: 184px;
     top: 737px;
+    animation: rotation 2s infinite linear;
+    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
-const SecondZigzagFilling = styled(Img)`
+const SecondZigzagFilling = styled(Img)<{ $rotationValue: number }>`
     position: absolute;
     top: 949px;
     right: 168px;
-    transform: rotate(60deg);
+    transform: ${({ $rotationValue }) => `rotate(${$rotationValue + 90}deg)`};
 `;
 
 const CircleFilling = styled(Img)`
     position: absolute;
     top: 600px;
     right: 138px;
-    transform: rotate(-24.22deg);
 `;
 
 const Dot = styled.div`
