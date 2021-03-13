@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Img, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
 import littleBean from '../../../assets/littleBean.png';
+import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 import { Amounts } from '../interface';
 import { ScaleBackground } from './ScaleBackground';
 import { ScaleMediumAmount } from './ScaleMediumAmount';
@@ -39,15 +40,24 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
 
+    const { scaleValue } = useAppearWithScaleAndBounce(delay);
+
+    const apparitionDuration = 1 * fps;
+
     const mediumAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: medium });
     const smallAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: small });
 
     const amountAnimationDuration = SCALE_ANIMATION_DURATION * fps;
 
-    const amountValueAnimation = interpolate(frame - delay, [0, amountAnimationDuration], [base, currentAmount], {
-        extrapolateLeft: 'clamp',
-        extrapolateRight: 'clamp',
-    });
+    const amountValueAnimation = interpolate(
+        frame - delay - apparitionDuration,
+        [0, amountAnimationDuration],
+        [base, currentAmount],
+        {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+        },
+    );
 
     const translateBeanYValue =
         getYPositionForValue({ baseValue: base, highValue: high, value: amountValueAnimation }) + BEAN_Y_OFFSET;
@@ -62,10 +72,10 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
     );
 
     return (
-        <Container className={className}>
+        <Container className={className} $scale={scaleValue}>
             <HighAmountText>{`${Math.round(amountValueAnimation)}€`}</HighAmountText>
             <ScaleBodyContainer>
-                <ScaleBackground />
+                <ScaleBackground translateBeanYValue={translateBeanYValue} scaleHeight={SCALE_HEIGHT} />
                 {shouldDisplayScaleMediumAmount && (
                     <ScaleMediumAmount top={mediumAmountYAxisPosition} amount={medium} />
                 )}
@@ -76,10 +86,11 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
     );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ $scale: number }>`
     display: flex;
     flex-direction: column;
     align-items: center;
+    transform: ${({ $scale }) => `scale(${$scale})`};
 `;
 
 const AmountText = styled.div`
