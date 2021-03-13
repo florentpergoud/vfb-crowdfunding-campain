@@ -2,16 +2,15 @@ import { Img, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remot
 import styled from 'styled-components';
 import neutralMandarine from '../../../assets/characters/Neutral-Mandarine.png';
 import neutralMimo from '../../../assets/characters/Neutral-Mimo.png';
-import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
 interface Props {
     delay: number;
+    className?: string;
 }
 
-export const Footer: React.FC<Props> = ({ delay }) => {
+export const Footer: React.FC<Props> = ({ delay, className }) => {
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
-    const { scaleValue } = useAppearWithScaleAndBounce(delay);
 
     const entranceAnimationStartFrame = frame - delay;
 
@@ -24,9 +23,8 @@ export const Footer: React.FC<Props> = ({ delay }) => {
     const inTranslateX = interpolate(entranceAnimation, [0, 1], [-350, 0]);
 
     return (
-        <Container>
+        <Container className={className}>
             <StyledImg src={neutralMimo} $translateXValue={inTranslateX} />
-            <CentalTextContainer $scaleValue={scaleValue}>Merci !</CentalTextContainer>
             <StyledImg src={neutralMandarine} $translateXValue={-inTranslateX} />
         </Container>
     );
@@ -35,25 +33,11 @@ export const Footer: React.FC<Props> = ({ delay }) => {
 const Container = styled.div`
     margin-top: 14px;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    width: 942px;
 `;
 
 const StyledImg = styled(Img)<{ $translateXValue: number }>`
-    margin-left: 12px;
     transform: ${({ $translateXValue }) => `translateX(${$translateXValue}px)`};
-`;
-
-const CentalTextContainer = styled.div<{ $scaleValue: number }>`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    font-family: 'Barlow Condensed';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 84px;
-    line-height: 84px;
-    color: ${({ theme }) => theme.colors.secondary};
-    transform: ${({ $scaleValue }) => `scale(${$scaleValue})`};
 `;

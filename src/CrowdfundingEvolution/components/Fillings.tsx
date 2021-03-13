@@ -28,15 +28,15 @@ const CrossFilling = styled(Img)`
 
 const ZigzagFilling = styled(Img)`
     position: absolute;
-    left: 172px;
-    top: 606px;
+    left: 184px;
+    top: 737px;
 `;
 
 const SecondZigzagFilling = styled(Img)`
     position: absolute;
     top: 949px;
     right: 168px;
-    transform: rotate(39.43deg);
+    transform: rotate(60deg);
 `;
 
 const CircleFilling = styled(Img)`
@@ -48,8 +48,8 @@ const CircleFilling = styled(Img)`
 
 const Dot = styled.div`
     position: absolute;
-    top: 1260px;
-    left: 164px;
+    top: 1324px;
+    left: 147px;
     height: 38px;
     width: 38px;
     border-radius: 19px;

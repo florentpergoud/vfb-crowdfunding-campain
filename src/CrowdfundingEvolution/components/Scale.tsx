@@ -14,8 +14,9 @@ interface Props {
     className?: string;
 }
 
-const SCALE_HEIGHT = 803;
+const SCALE_HEIGHT = 950;
 const SCALE_ANIMATION_DURATION = 2.5;
+
 const BEAN_Y_OFFSET = 30;
 
 const getYPositionForValue = ({
@@ -91,8 +92,8 @@ const AmountText = styled.div`
 `;
 
 const HighAmountText = styled(AmountText)`
-    font-size: 102px;
-    line-height: 142px;
+    font-size: 150px;
+    line-height: 208px;
 `;
 
 const ScaleBodyContainer = styled.div`

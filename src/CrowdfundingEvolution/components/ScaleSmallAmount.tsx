@@ -13,7 +13,7 @@ export const ScaleSmallAmount: React.FC<Props> = ({ top, amount, delay }) => {
     return (
         <SmallAmountContainer $top={top} $scale={scaleValue}>
             <SmallDot />
-            <SmallAmountText>{amount}€</SmallAmountText>
+            <AmountText>{amount}€</AmountText>
         </SmallAmountContainer>
     );
 };
@@ -25,11 +25,8 @@ const AmountText = styled.div`
     display: flex;
     align-items: center;
     color: ${({ theme }) => theme.colors.secondary2};
-`;
-
-const SmallAmountText = styled(AmountText)`
-    font-size: 70px;
-    line-height: 97px;
+    font-size: 60px;
+    line-height: 83px;
 `;
 
 const SmallDot = styled.div`

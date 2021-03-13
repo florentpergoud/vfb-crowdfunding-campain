@@ -13,7 +13,7 @@ export const ScaleMediumAmount: React.FC<Props> = ({ top, amount, delay }) => {
     return (
         <MediumAmountContainer $top={top} $scale={scaleValue}>
             <MediumDot />
-            <MediumAmountText>{amount}€</MediumAmountText>
+            <AmountText>{amount}€</AmountText>
         </MediumAmountContainer>
     );
 };
@@ -25,11 +25,8 @@ const AmountText = styled.div`
     display: flex;
     align-items: center;
     color: ${({ theme }) => theme.colors.secondary2};
-`;
-
-const MediumAmountText = styled(AmountText)`
-    font-size: 80px;
-    line-height: 111px;
+    font-size: 60px;
+    line-height: 83px;
 `;
 
 const MediumDot = styled.div`

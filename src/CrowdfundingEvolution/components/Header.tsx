@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
 
 const Container = styled.div<{ $scale: number }>`
     align-items: center;
-    margin-top: 124px;
+    margin-top: 112px;
     display: flex;
     flex-direction: column;
     justify-content: center;

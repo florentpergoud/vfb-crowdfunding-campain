@@ -27,7 +27,7 @@ export const CrowdfundingEvolution: React.FC = () => {
                 <Header />
                 <Fillings />
                 <StyledScale amounts={AMOUNTS} currentAmount={CURRENT_AMOUNT} delay={60} />
-                <Footer delay={30} />
+                <StyledFooter delay={30} />
             </ContentContainer>
         </ThemeProvider>
     );
@@ -38,10 +38,15 @@ const Background = styled(AbsoluteFill)`
 `;
 
 const StyledScale = styled(Scale)`
-    margin-top: 58px;
+    margin-top: 62px;
 `;
 
 const ContentContainer = styled(AbsoluteFill)`
     padding-left: ${CONTENT_HORIZONTAL_PADDING}px;
     padding-right: ${CONTENT_HORIZONTAL_PADDING}px;
+`;
+
+const StyledFooter = styled(Footer)`
+    position: absolute;
+    bottom: 96px;
 `;

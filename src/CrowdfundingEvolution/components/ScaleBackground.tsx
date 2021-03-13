@@ -27,6 +27,10 @@ export const ScaleBackground: React.FC<Props> = ({ className }) => {
             <Dash />
             <Dash />
             <Dash />
+            <Dash />
+            <Dash />
+            <Dash />
+            <Dash />
             <BottomDot />
         </BaseScale>
     );
@@ -42,9 +46,9 @@ const BaseScale = styled.div`
 
 const Dash = styled.div`
     width: 5px;
-    height: 20px;
+    height: 21px;
     background: ${({ theme }) => theme.colors.secondary2};
-    margin-top: 20px;
+    margin-top: 18px;
 `;
 
 const EnormousDot = styled.div`
