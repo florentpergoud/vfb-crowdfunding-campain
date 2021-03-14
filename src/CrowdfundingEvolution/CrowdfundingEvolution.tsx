@@ -16,7 +16,7 @@ const AMOUNTS: Amounts = {
     high: 8000,
 };
 
-const CURRENT_AMOUNT = 7000;
+const CURRENT_AMOUNT = 5000;
 
 const CONTENT_HORIZONTAL_PADDING = 75;
 
@@ -24,8 +24,8 @@ export const CrowdfundingEvolution: React.FC = () => {
     const { fps } = useVideoConfig();
 
     const fillingsDelay = 4.5 * fps;
-    const scaleDelay = 0.5 * fps;
-    const scaleDisappearanceDelay = 4 * fps;
+    const scaleDelay = 1 * fps;
+    const scaleDisappearanceDelay = 3.5 * fps;
     const footerDelay = 0.5 * fps;
     const thanksDelay = 4.5 * fps;
 

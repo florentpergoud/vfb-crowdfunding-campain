@@ -3,6 +3,7 @@ import { Img, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import styled from 'styled-components';
 import littleBean from '../../../assets/littleBean.png';
 import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
+import { useBellUtils } from '../../animationHooks/useBellUtils';
 import { Amounts } from '../interface';
 import { ScaleBackground } from './ScaleBackground';
 import { ScaleMediumAmount } from './ScaleMediumAmount';
@@ -34,7 +35,7 @@ const getYPositionForValue = ({
 };
 
 const shouldDisplayScaleAmount = (amountValueAnimation: number, currentAmount: number, scaleAmount: number) => {
-    return amountValueAnimation >= scaleAmount || amountValueAnimation === currentAmount;
+    return amountValueAnimation >= scaleAmount;
 };
 
 export const Scale: React.FC<Props> = ({
@@ -48,7 +49,6 @@ export const Scale: React.FC<Props> = ({
     const { fps } = useVideoConfig();
 
     const { scaleValue } = useAppearWithScaleAndBounce(delay);
-
     const amountValueAnimationDuration = 0.5 * fps;
 
     const mediumAmountYAxisPosition = getYPositionForValue({ baseValue: base, highValue: high, value: medium });
@@ -83,9 +83,13 @@ export const Scale: React.FC<Props> = ({
         [amountValueAnimation, currentAmount, small],
     );
 
+    const { bellCurveAnimatedValue } = useBellUtils(delay + amountAnimationDuration + fps / 2, fps / 2);
+
     return (
         <Container className={className} $scale={scaleValue}>
-            <HighAmountText>{`${Math.round(amountValueAnimation)}€`}</HighAmountText>
+            <HighAmountText $scale={1 + bellCurveAnimatedValue * 0.45}>{`${Math.round(
+                amountValueAnimation,
+            )}€`}</HighAmountText>
             <ScaleBodyContainer $scale={disappearsScaleValue}>
                 <ScaleBackground translateBeanYValue={translateBeanYValue} scaleHeight={SCALE_HEIGHT} />
                 {shouldDisplayScaleMediumAmount && (
@@ -114,9 +118,10 @@ const AmountText = styled.div`
     color: ${({ theme }) => theme.colors.secondary2};
 `;
 
-const HighAmountText = styled(AmountText)`
+const HighAmountText = styled(AmountText)<{ $scale: number }>`
     font-size: 150px;
     line-height: 208px;
+    transform: ${({ $scale }) => `scale(${$scale})`};
 `;
 
 const ScaleBodyContainer = styled.div<{ $scale: number }>`
