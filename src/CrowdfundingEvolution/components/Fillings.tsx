@@ -37,45 +37,60 @@ const Container = styled(AbsoluteFill)<{ $scale: number }>`
     transform: ${({ $scale }) => `scale(${$scale})`};
 `;
 
-const CrossFilling = styled(Img)<{ $rotationValue: number }>`
+const CrossFilling = styled(Img).attrs<{ $rotationValue: number }>(({ $rotationValue }) => ({
+    style: {
+        transform: `rotate(${$rotationValue}deg)`,
+    },
+}))<{ $rotationValue: number }>`
     position: absolute;
     width: 43.69px;
     height: 43.69px;
     right: 80px;
     top: 1254px;
-    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
-const BlueCrossFilling = styled(Img)<{ $rotationValue: number }>`
+const BlueCrossFilling = styled(Img).attrs<{ $rotationValue: number }>(({ $rotationValue }) => ({
+    style: {
+        transform: `rotate(${$rotationValue}deg)`,
+    },
+}))<{ $rotationValue: number }>`
     position: absolute;
     width: 43.69px;
     height: 43.69px;
     right: 500px;
     top: 737px;
-    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
-const ZigzagFilling = styled(Img)<{ $rotationValue: number }>`
+const ZigzagFilling = styled(Img).attrs<{ $rotationValue: number }>(({ $rotationValue }) => ({
+    style: {
+        transform: `rotate(${$rotationValue}deg)`,
+    },
+}))<{ $rotationValue: number }>`
     position: absolute;
     left: 184px;
     top: 737px;
     animation: rotation 2s infinite linear;
-    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
-const BlueZigzagFilling = styled(Img)<{ $rotationValue: number }>`
+const BlueZigzagFilling = styled(Img).attrs<{ $rotationValue: number }>(({ $rotationValue }) => ({
+    style: {
+        transform: `rotate(${$rotationValue}deg)`,
+    },
+}))<{ $rotationValue: number }>`
     position: absolute;
     top: 1308px;
     left: 428px;
     animation: rotation 2s infinite linear;
-    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
-const SecondZigzagFilling = styled(Img)<{ $rotationValue: number }>`
+const SecondZigzagFilling = styled(Img).attrs<{ $rotationValue: number }>(({ $rotationValue }) => ({
+    style: {
+        transform: `rotate(${$rotationValue + 90}deg)`,
+    },
+}))<{ $rotationValue: number }>`
     position: absolute;
     top: 840px;
     right: 76px;
-    transform: ${({ $rotationValue }) => `rotate(${$rotationValue + 90}deg)`};
 `;
 
 const LightBlueCircleFilling = styled(Img)`

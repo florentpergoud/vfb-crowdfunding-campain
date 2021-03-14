@@ -38,6 +38,8 @@ const Container = styled.div`
     width: 942px;
 `;
 
-const StyledImg = styled(Img)<{ $translateXValue: number }>`
-    transform: ${({ $translateXValue }) => `translateX(${$translateXValue}px)`};
-`;
+const StyledImg = styled(Img).attrs<{ $translateXValue: number }>(({ $translateXValue }) => ({
+    style: {
+        transform: `translateX(${$translateXValue}px)`,
+    },
+}))<{ $translateXValue: number }>``;
