@@ -7,6 +7,7 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Scale } from './components/Scale';
 import { Amounts } from './interface';
+import { Thanks } from './Thanks';
 
 const AMOUNTS: Amounts = {
     base: 2000,
@@ -19,21 +20,22 @@ const CURRENT_AMOUNT = 7000;
 
 const CONTENT_HORIZONTAL_PADDING = 75;
 
-const FILLING_DELAY_IN_SECONDS = 5;
-
 export const CrowdfundingEvolution: React.FC = () => {
     const { fps } = useVideoConfig();
 
+    const fillingsDelay = 4.5 * fps;
     const scaleDelay = 0.5 * fps;
     const footerDelay = 0.5 * fps;
+    const thanksDelay = 4.5 * fps;
 
     return (
         <ThemeProvider theme={theme}>
             <Background />
             <ContentContainer>
                 <Header />
-                <Fillings delay={FILLING_DELAY_IN_SECONDS * fps} />
                 <StyledScale amounts={AMOUNTS} currentAmount={CURRENT_AMOUNT} delay={scaleDelay} />
+                <Fillings delay={fillingsDelay} />
+                <Thanks delay={thanksDelay} />
                 <StyledFooter delay={footerDelay} />
             </ContentContainer>
         </ThemeProvider>
