@@ -24,7 +24,7 @@ const AmountText = styled.div`
     font-weight: normal;
     display: flex;
     align-items: center;
-    color: ${({ theme }) => theme.colors.secondary2};
+    color: ${({ theme }) => theme.colors.secondary};
     font-size: 60px;
     line-height: 83px;
 `;
