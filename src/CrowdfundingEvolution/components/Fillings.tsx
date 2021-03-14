@@ -1,7 +1,10 @@
 import { AbsoluteFill, Img, interpolate, useCurrentFrame } from 'remotion';
 import styled from 'styled-components';
-import blueCircleFilling from '../../../assets/BlueCircleFilling.png';
+import blueCircle from '../../../assets/blueCircle.png';
+import bluecrossFillings from '../../../assets/blueCross.png';
+import blueZigzag from '../../../assets/blueZigzag.png';
 import crossFillings from '../../../assets/CrossFilling.png';
+import lightBlueCircle from '../../../assets/lightBlueCircle.png';
 import zigzag from '../../../assets/Zigzag.png';
 import { useAppearWithScaleAndBounce } from '../../animationHooks/useAppearWithScaleAndBounce';
 
@@ -18,10 +21,14 @@ export const Fillings: React.FC<Props> = ({ delay }) => {
     return (
         <Container $scale={scaleValue}>
             <CrossFilling src={crossFillings} $rotationValue={rotationValue} />
+            <BlueCrossFilling src={bluecrossFillings} $rotationValue={rotationValue} />
             <ZigzagFilling src={zigzag} $rotationValue={rotationValue} />
-            <CircleFilling src={blueCircleFilling} />
+            <BlueZigzagFilling src={blueZigzag} $rotationValue={rotationValue} />
+            <LightBlueCircleFilling src={lightBlueCircle} />
+            <BlueCircleFilling src={blueCircle} />
             <SecondZigzagFilling src={zigzag} $rotationValue={rotationValue} />
             <Dot />
+            <YellowDot />
         </Container>
     );
 };
@@ -34,8 +41,17 @@ const CrossFilling = styled(Img)<{ $rotationValue: number }>`
     position: absolute;
     width: 43.69px;
     height: 43.69px;
-    left: 130px;
-    top: 422.92px;
+    right: 80px;
+    top: 1254px;
+    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
+`;
+
+const BlueCrossFilling = styled(Img)<{ $rotationValue: number }>`
+    position: absolute;
+    width: 43.69px;
+    height: 43.69px;
+    right: 500px;
+    top: 737px;
     transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
@@ -47,17 +63,31 @@ const ZigzagFilling = styled(Img)<{ $rotationValue: number }>`
     transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
 `;
 
+const BlueZigzagFilling = styled(Img)<{ $rotationValue: number }>`
+    position: absolute;
+    top: 1308px;
+    left: 428px;
+    animation: rotation 2s infinite linear;
+    transform: ${({ $rotationValue }) => `rotate(${$rotationValue}deg)`};
+`;
+
 const SecondZigzagFilling = styled(Img)<{ $rotationValue: number }>`
     position: absolute;
-    top: 949px;
-    right: 168px;
+    top: 840px;
+    right: 76px;
     transform: ${({ $rotationValue }) => `rotate(${$rotationValue + 90}deg)`};
 `;
 
-const CircleFilling = styled(Img)`
+const LightBlueCircleFilling = styled(Img)`
     position: absolute;
     top: 600px;
     right: 138px;
+`;
+
+const BlueCircleFilling = styled(Img)`
+    position: absolute;
+    top: 1532px;
+    left: 595px;
 `;
 
 const Dot = styled.div`
@@ -68,4 +98,10 @@ const Dot = styled.div`
     width: 38px;
     border-radius: 19px;
     background-color: ${({ theme }) => theme.colors.secondary};
+`;
+
+const YellowDot = styled(Dot)`
+    background-color: ${({ theme }) => theme.colors.primary1};
+    top: 1332px;
+    left: 687px;
 `;
