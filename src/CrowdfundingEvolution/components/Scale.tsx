@@ -12,6 +12,7 @@ interface Props {
     amounts: Amounts;
     currentAmount: number;
     delay: number;
+    disappearanceDelay: number;
     className?: string;
 }
 
@@ -36,7 +37,13 @@ const shouldDisplayScaleAmount = (amountValueAnimation: number, currentAmount: n
     return amountValueAnimation >= scaleAmount || amountValueAnimation === currentAmount;
 };
 
-export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high }, currentAmount, className, delay }) => {
+export const Scale: React.FC<Props> = ({
+    amounts: { base, small, medium, high },
+    currentAmount,
+    className,
+    delay,
+    disappearanceDelay,
+}) => {
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
 
@@ -59,6 +66,11 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
         },
     );
 
+    const disappearsScaleValue = interpolate(frame - delay - disappearanceDelay, [0, 10], [1, 0], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+    });
+
     const translateBeanYValue =
         getYPositionForValue({ baseValue: base, highValue: high, value: amountValueAnimation }) + BEAN_Y_OFFSET;
 
@@ -74,7 +86,7 @@ export const Scale: React.FC<Props> = ({ amounts: { base, small, medium, high },
     return (
         <Container className={className} $scale={scaleValue}>
             <HighAmountText>{`${Math.round(amountValueAnimation)}€`}</HighAmountText>
-            <ScaleBodyContainer>
+            <ScaleBodyContainer $scale={disappearsScaleValue}>
                 <ScaleBackground translateBeanYValue={translateBeanYValue} scaleHeight={SCALE_HEIGHT} />
                 {shouldDisplayScaleMediumAmount && (
                     <ScaleMediumAmount top={mediumAmountYAxisPosition} amount={medium} />
@@ -107,12 +119,13 @@ const HighAmountText = styled(AmountText)`
     line-height: 208px;
 `;
 
-const ScaleBodyContainer = styled.div`
+const ScaleBodyContainer = styled.div<{ $scale: number }>`
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     width: 100%;
+    transform: ${({ $scale }) => `scale(${$scale})`};
 `;
 
 const Bean = styled(Img)<{ $translateYValue: number }>`

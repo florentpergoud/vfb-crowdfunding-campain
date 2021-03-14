@@ -25,6 +25,7 @@ export const CrowdfundingEvolution: React.FC = () => {
 
     const fillingsDelay = 4.5 * fps;
     const scaleDelay = 0.5 * fps;
+    const scaleDisappearanceDelay = 4 * fps;
     const footerDelay = 0.5 * fps;
     const thanksDelay = 4.5 * fps;
 
@@ -33,7 +34,12 @@ export const CrowdfundingEvolution: React.FC = () => {
             <Background />
             <ContentContainer>
                 <Header />
-                <StyledScale amounts={AMOUNTS} currentAmount={CURRENT_AMOUNT} delay={scaleDelay} />
+                <StyledScale
+                    amounts={AMOUNTS}
+                    currentAmount={CURRENT_AMOUNT}
+                    delay={scaleDelay}
+                    disappearanceDelay={scaleDisappearanceDelay}
+                />
                 <Fillings delay={fillingsDelay} />
                 <Thanks delay={thanksDelay} />
                 <StyledFooter delay={footerDelay} />
