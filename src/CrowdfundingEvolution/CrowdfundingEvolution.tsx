@@ -2,6 +2,7 @@ import React from 'react';
 import { AbsoluteFill, useVideoConfig } from 'remotion';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../theme';
+import values from '../values.json';
 import { Fillings } from './components/Fillings';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
@@ -16,11 +17,14 @@ const AMOUNTS: Amounts = {
     high: 8000,
 };
 
-const CURRENT_AMOUNT = 8000;
-
 const CONTENT_HORIZONTAL_PADDING = 75;
 
-export const CrowdfundingEvolution: React.FC = () => {
+interface Props {
+    currentAmount: number;
+}
+
+export const CrowdfundingEvolution: React.FC<Props> = () => {
+    const { currentAmount } = values;
     const { fps } = useVideoConfig();
 
     const scaleDelay = 1 * fps;
@@ -37,7 +41,7 @@ export const CrowdfundingEvolution: React.FC = () => {
                 <Header />
                 <StyledScale
                     amounts={AMOUNTS}
-                    currentAmount={CURRENT_AMOUNT}
+                    currentAmount={currentAmount}
                     delay={scaleDelay}
                     disappearanceDelay={scaleDisappearanceDelay}
                 />

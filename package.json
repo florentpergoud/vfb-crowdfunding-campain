@@ -4,7 +4,7 @@
 	"description": "My Remotion video",
 	"scripts": {
 		"start": "remotion preview src/index.tsx",
-		"build": "remotion render src/index.tsx CrowdfundingEvolution out.mp4",
+		"build": "node src/getCurrentAmount.js && remotion render src/index.tsx CrowdfundingEvolution out.mp4 ",
 		"upgrade": "remotion upgrade",
 		"server": "ts-node server.tsx",
 		"test": "eslint src --ext ts,tsx,js,jsx && tsc",
@@ -40,6 +40,8 @@
 		"@typescript-eslint/parser": "^4.16.1",
 		"commitizen": "^4.2.3",
 		"eslint-config-prettier": "^8.1.0",
-		"eslint-plugin-prettier": "^3.3.1"
+		"eslint-plugin-prettier": "^3.3.1",
+		"got": "^11.8.2",
+		"jsdom": "^16.5.1"
 	}
 }
