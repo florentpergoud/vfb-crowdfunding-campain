@@ -37,7 +37,12 @@ const MediumDot = styled.div`
     background: ${({ theme }) => theme.colors.secondary2};
 `;
 
-const MediumAmountContainer = styled.div<{ $top: number; $scale: number }>`
+const MediumAmountContainer = styled.div.attrs<{ $top: number; $scale: number }>(({ $top, $scale }) => ({
+    style: {
+        transform: `scale(${$scale})`,
+        top: `${$top + 55}px`,
+    },
+}))<{ $top: number; $scale: number }>`
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -45,6 +50,4 @@ const MediumAmountContainer = styled.div<{ $top: number; $scale: number }>`
     width: 100%;
     height: 110px;
     padding-right: 442px;
-    top: ${({ $top }) => $top + 55}px;
-    transform: ${({ $scale }) => `scale(${$scale})`};
 `;

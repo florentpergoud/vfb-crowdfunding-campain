@@ -5,3 +5,4 @@ Config.Output.setCrf(1);
 Config.Output.setOverwriteOutput(true);
 Config.Output.setImageSequence(false);
 Config.Rendering.setImageFormat('jpeg');
+Config.Rendering.setConcurrency(1);

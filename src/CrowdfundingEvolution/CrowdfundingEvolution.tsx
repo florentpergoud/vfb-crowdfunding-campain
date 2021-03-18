@@ -68,5 +68,5 @@ const ContentContainer = styled(AbsoluteFill)`
 
 const StyledFooter = styled(Footer)`
     position: absolute;
-    bottom: 96px;
+    bottom: 143px;
 `;

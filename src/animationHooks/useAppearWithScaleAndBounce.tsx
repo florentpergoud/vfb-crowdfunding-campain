@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 export const useAppearWithScaleAndBounce = (delay = 0): { scaleValue: number } => {
     const frame = useCurrentFrame();
-    const [initialFrame] = useState(frame);
+    const initialFrame = useRef(frame).current;
 
     const { fps } = useVideoConfig();
 

@@ -42,7 +42,7 @@ export const Footer: React.FC<Props> = ({ delay, className, startJumpingDelay })
     return (
         <Container className={className}>
             <StyledImg src={mimoFace} $translateXValue={inTranslateX} $translateY={translateY} />
-            <StyledImg $isFlipped src={mandaFace} $translateXValue={-inTranslateX} $translateY={translateY} />
+            <StyledMandarineImg $isFlipped src={mandaFace} $translateXValue={-inTranslateX} $translateY={translateY} />
         </Container>
     );
 };
@@ -64,4 +64,8 @@ const StyledImg = styled(Img).attrs<{ $translateXValue: number; $isFlipped?: boo
 )<{ $translateXValue: number; $isFlipped?: boolean; $translateY?: number }>`
     height: 302px;
     width: 220px;
+`;
+
+const StyledMandarineImg = styled(StyledImg)<{ $translateXValue: number; $isFlipped?: boolean; $translateY?: number }>`
+    width: 240px;
 `;
