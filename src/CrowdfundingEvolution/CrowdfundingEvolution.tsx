@@ -11,10 +11,10 @@ import { Amounts } from './interface';
 import { Thanks } from './Thanks';
 
 const AMOUNTS: Amounts = {
-    base: 2000,
+    base: 0,
     small: 4000,
-    medium: 6000,
-    high: 8000,
+    medium: 8000,
+    high: 12000,
 };
 
 const CONTENT_HORIZONTAL_PADDING = 75;
